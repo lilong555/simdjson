@@ -72,6 +72,8 @@ simdjson_inline tape_type tape_ref::tape_ref_type() const noexcept {
   return static_cast<tape_type>(doc->tape[json_index] >> 56);
 }
 simdjson_inline size_t tape_ref::before_element(size_t array_start) const noexcept {
+  SIMDJSON_DEVELOPMENT_ASSERT(usable());
+  SIMDJSON_DEVELOPMENT_ASSERT(json_index > array_start);
   tape_ref previous(doc, json_index - 1);
   if (previous.json_index == array_start) { return array_start; }
   // An exact numeric marker cannot end an element unless it is itself the
